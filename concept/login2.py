@@ -61,6 +61,7 @@ def login():
     # Ensure the scope parameter is correctly encoded to handle spaces
     encoded_params = urlencode(params, quote_via=quote)
     url = f"{AUTH_URL}?{encoded_params}"
+    print(f"Opening {url} in your browser")
     webbrowser.open(url)
     start_server()
     return access_token
