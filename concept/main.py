@@ -1,6 +1,6 @@
 import requests
 import json
-from login import login
+import login2
 from lyricsgenius import Genius
 from langdetect import detect
 from utils.headers import get_headers
@@ -41,7 +41,7 @@ def get_playlist(token, playlist_id):
     return current_response
 
 
-token = login()
+token = login2.login()
 user_id = get_current_user_id(token)
 
 # This is urban blazing id

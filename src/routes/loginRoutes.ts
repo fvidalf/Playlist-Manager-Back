@@ -5,8 +5,8 @@ import { URLSearchParams } from 'url';
 
 const loginRouter = new Router();
 
-const CLIENT_ID = apiConfig.CLIENT_ID;
-const CLIENT_SECRET = apiConfig.CLIENT_SECRET;
+const CLIENT_ID = apiConfig.SPOTIFY_CLIENT_ID;
+const CLIENT_SECRET = apiConfig.SPOTIFY_CLIENT_SECRET;
 const REDIRECT_URI = "http://localhost:3000/callback";
 const SCOPE = "playlist-read-private playlist-modify-private";
 const AUTH_URL = "https://accounts.spotify.com/authorize";
