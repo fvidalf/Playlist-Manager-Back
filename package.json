@@ -1,0 +1,41 @@
+{
+  "name": "playlist-manager-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "dependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "axios": "^1.7.9",
+    "url": "^0.11.4"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "nodemon src/app.ts",
+    "start": "node dist/app.js",
+    "clean": "rm -rf dist",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fvidalf/Playlist-Manager-Back.git"
+  },
+  "author": "fvidalf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fvidalf/Playlist-Manager-Back/issues"
+  },
+  "homepage": "https://github.com/fvidalf/Playlist-Manager-Back#readme",
+  "devDependencies": {
+    "@types/koa": "^2.15.0",
+    "@types/koa-logger": "^3.1.5",
+    "@types/koa-router": "^7.4.8",
+    "dotenv": "^16.4.7",
+    "koa": "^2.15.3",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^13.0.1",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.2"
+  }
+}
