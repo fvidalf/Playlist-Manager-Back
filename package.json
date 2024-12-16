@@ -4,8 +4,12 @@
   "description": "",
   "main": "dist/app.js",
   "dependencies": {
+    "@koa/cors": "^5.0.0",
     "@tsconfig/node20": "^20.1.4",
+    "@types/cors": "^2.8.17",
+    "@types/koa__cors": "^5.0.0",
     "axios": "^1.7.9",
+    "cors": "^2.8.5",
     "url": "^0.11.4"
   },
   "scripts": {

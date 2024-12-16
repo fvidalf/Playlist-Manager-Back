@@ -1,10 +1,11 @@
 import Koa from "koa";
-import { apiConfig } from "./config";
 import logger from "koa-logger";
 import { router } from "./routes/routes";
+import cors from "@koa/cors";
 
 const app = new Koa();
 
+app.use(cors());
 app.use(logger());
 app.use(router.routes());
 app.use(router.allowedMethods());
