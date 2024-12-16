@@ -5,9 +5,9 @@ import { URLSearchParams } from 'url';
 
 const loginRouter = new Router();
 
-const CLIENT_ID = apiConfig.CLIENT_ID;
-const CLIENT_SECRET = apiConfig.CLIENT_SECRET;
-const REDIRECT_URI = "http://localhost:3000/callback";
+const CLIENT_ID = apiConfig.SPOTIFY_CLIENT_ID;
+const CLIENT_SECRET = apiConfig.SPOTIFY_CLIENT_SECRET;
+const REDIRECT_URI = "http://localhost:5173/callback";
 const SCOPE = "playlist-read-private playlist-modify-private";
 const AUTH_URL = "https://accounts.spotify.com/authorize";
 const TOKEN_URL = "https://accounts.spotify.com/api/token";
@@ -23,12 +23,11 @@ loginRouter.get("/login", async (ctx) => {
   });
 
   const authUrl = `${AUTH_URL}?${params.toString()}`;
-  ctx.redirect(authUrl);
+  ctx.body = { authUrl };
 });
 
 loginRouter.get("/callback", async (ctx) => {
   const code = ctx.query.code;
-  console.log('code:', code); // Debugging line
 
   if (code) {
     try {
@@ -47,13 +46,14 @@ loginRouter.get("/callback", async (ctx) => {
       });
 
       access_token = response.data.access_token;
-      console.log('access_token:', access_token); // Debugging line
-      ctx.body = 'Successfully logged in. You can close this tab now.';
+      ctx.body = { access_token };
     } catch (error) {
       console.log('error:', error); // Debugging line
+      ctx.status = 500;
       ctx.body = 'Failed to login';
     }
   } else {
+    ctx.status = 400;
     ctx.body = 'Failed to login';
   }
 });
