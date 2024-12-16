@@ -8,8 +8,10 @@
     "@tsconfig/node20": "^20.1.4",
     "@types/cors": "^2.8.17",
     "@types/koa__cors": "^5.0.0",
+    "@types/koa-cookie": "^1.0.3",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
+    "koa-cookie": "^1.0.0",
     "url": "^0.11.4"
   },
   "scripts": {

@@ -2,7 +2,6 @@ import axios from "axios";
 import { apiConfig } from "./../config";
 import Router from "koa-router";
 import { URLSearchParams } from 'url';
-
 const loginRouter = new Router();
 
 const CLIENT_ID = apiConfig.SPOTIFY_CLIENT_ID;
@@ -45,8 +44,23 @@ loginRouter.get("/callback", async (ctx) => {
         }
       });
 
-      access_token = response.data.access_token;
-      ctx.body = { access_token };
+      const { access_token, refresh_token, expires_in } = response.data;
+
+      ctx.cookies.set('access_token', access_token, {
+        httpOnly: true,
+        secure: apiConfig.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: expires_in * 1000,
+      });
+
+      ctx.cookies.set('refresh_token', refresh_token, {
+        httpOnly: true,
+        secure: apiConfig.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: expires_in * 1000,
+      });
+
+      ctx.body = { success: true };
     } catch (error) {
       console.log('error:', error); // Debugging line
       ctx.status = 500;
@@ -55,6 +69,17 @@ loginRouter.get("/callback", async (ctx) => {
   } else {
     ctx.status = 400;
     ctx.body = 'Failed to login';
+  }
+});
+
+loginRouter.get("/auth/status", async (ctx) => {
+  const token = ctx.cookies.get('access_token');
+  console.log('token:', token); // Debugging line
+
+  if (token) {
+    ctx.body = { isAuthenticated: true };
+  } else {
+    ctx.body = { isAuthenticated: false };
   }
 });
 
