@@ -9,7 +9,7 @@ const SPOTIFY_URL = apiConfig.SPOTIFY_URL;
 playlistRouter.get("/playlists", async (ctx) => {
     // Given a user's access token, fetch their playlists
     // Needs to login first to get the access token (client-stored)
-    const accessToken = ctx.query.access_token;
+    const accessToken = ctx.cookies.get('access_token');
     const limit = ctx.query.limit || "20";
     const offset = ctx.query.offset || "0";
 
