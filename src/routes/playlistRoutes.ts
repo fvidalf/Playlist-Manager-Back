@@ -10,14 +10,16 @@ playlistRouter.get("/playlists", async (ctx) => {
     // Given a user's access token, fetch their playlists
     // Needs to login first to get the access token (client-stored)
     const accessToken = ctx.cookies.get('access_token');
-    const limit = ctx.query.limit || "20";
-    const offset = ctx.query.offset || "0";
+    // Refactor to admit page and limit instead of offset and limit
+
+    const limit = ctx.query.limit || 20;
+    const offset = ctx.query.page ? (+ctx.query.page - 1) * +limit : 0;
 
     try {
         // https://api.spotify.com/v1/me/playlists this is the endpoint to get the playlists
         const paginationParams = new URLSearchParams({
-            limit: limit,
-            offset: offset
+            limit: limit.toString(),
+            offset: offset.toString()
         });
         const playlists = await axios.get(`${SPOTIFY_URL}/me/playlists?${paginationParams.toString()}`, {
             headers: {
@@ -27,7 +29,7 @@ playlistRouter.get("/playlists", async (ctx) => {
         });
         const next = playlists.data.next;
         ctx.body = playlists.data.items;
-        console.log('playlists:', playlists); // Debugging line
+        console.log('playlists:', playlists.data); // Debugging line
 
     } catch (error) {
         console.log('error:', error); // Debugging line
