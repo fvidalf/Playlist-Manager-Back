@@ -27,9 +27,8 @@ playlistRouter.get("/playlists", async (ctx) => {
                 'Authorization': `Bearer ${accessToken}`
             }
         });
-        const next = playlists.data.next;
-        ctx.body = playlists.data.items;
-        console.log('playlists:', playlists.data); // Debugging line
+        ctx.body = { items: playlists.data.items, total: playlists.data.total }
+        // console.log('playlists:', playlists.data); // Debugging line
 
     } catch (error) {
         console.log('error:', error); // Debugging line
