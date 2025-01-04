@@ -36,4 +36,30 @@ playlistRouter.get("/playlists", async (ctx) => {
     }
 });
 
+playlistRouter.get("/playlists/:id", async (ctx) => {
+    let response = await axios.get(`${SPOTIFY_URL}/playlists/${ctx.params.id}`, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': `Bearer ${ctx.cookies.get('access_token')}`
+        }
+    });
+    let currentData = response.data;
+    let nextUrl = currentData.tracks.next;
+
+    while (nextUrl) {
+        response = await axios.get(nextUrl, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `Bearer ${ctx.cookies.get('access_token')}`
+            }
+        });
+        console.log('response:', response.data); // Debugging line
+        currentData.tracks.items.push(...response.data.items);
+        nextUrl = response.data.next;
+    }
+
+    ctx.body = currentData;
+    console.log('playlist:', currentData); // Debugging line
+});
+
 export { playlistRouter };
